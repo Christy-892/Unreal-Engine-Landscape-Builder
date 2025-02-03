@@ -28,3 +28,5 @@ def triggerAllSims():
 - SideFX Landscape Generation Guide: https://www.sidefx.com/docs/houdini/unreal/landscape/generate.html
 ## ToDo
 - [x] Proof of Concept
+- [ ] Feature - Custom Heightmap Import
+- [ ] Improvement - Preview/Generation Speed

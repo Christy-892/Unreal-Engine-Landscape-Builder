@@ -1,13 +1,54 @@
-# Unreal Engine Landscape Builder (Proof of Concept)
-This tool is inspired by the Landscape Creation process on Project Pegasus (https://www.sidefx.com/tutorials/project-pegasus-landscape-creation/). I wanted to take this concept further and build a tool/pipeline that is readable and adaptable for general users and could be used for various pipelines. This tool is to be used for initial Landscape Generation inside of Unreal Engine
+# Unreal Engine Landscape Generator
+This is a tool for generating Landscapes in Unreal Engine. The design and process of this tool is highly adaptable and allows for either; a quick and easy setup to generate a landscape, or a more in-depth approach for advanced users<br/>  
+This tool was inspired by the Landscape Creation process on Project Pegasus (See "Further Reading"). I wanted to take this concept further and build a tool/pipeline that is adaptable for users of different levels
+
 ## How To Guide
-Intention of this tool, is to be used with Houdini Session Sync inside Unreal Engine. HDA layout/design has been setup to be user-friendly
+The intended use of this tool is to be used inside Unreal Engine with **Houdini Session Sync**. The idea is to use the Houdini Session to make changes and easily visualize any alterations made to the heightfield. Once ready, the user can then export into Unreal Engine. This allows for a smooth and seamless iteration process.
+1. In Unreal Engine, browse to the HDA in your **Content Browser** and RMB>Instantiate at the origin
+2. Run Houdini Session Sync (Houdini Engine>Open Houdini Session Sync...)
+3. On the instance, enable "Do Not Generate Outputs" and then recook the HDA to see it appear inside Houdini Session
+4. In Houdini, go inside the Geometry node and then RMB>Allow Editing of Contents
+5. On the tab section where the Houdini Engine SessionSync display is, select the HDA tab to display the parameters
+6. Now you can edit the parameters as desired and go inside the tool to make any further changes
+7. To see changes in Unreal, disable "Do Not Generate Objects" (use this toggle to control Recooks in Unreal as constantly updating landscape data is time-consuming)
+
+Note - The layout and colouring of the nodes inside the HDA has been carefully designed and structured for an easier understanding of where and how to make necessary changes
+
 ## Features
 ### Exposed "Basic" parameters
-Exposed basic parameters to allow the use to quick display Landscape with/without various features:
-![image](https://github.com/user-attachments/assets/41770dc5-3d7c-430e-a3f1-565e8b83ea04)
+Exposed basic parameters to allow the user to make quick alterations for basic shape and noise:
+![image](https://github.com/user-attachments/assets/e303e554-af28-467f-8f10-00a5c545ec9e)
 
+### Generation Method
+Tool has two generation methods; "Generate Heightfield" and "Import Heightfield". This allows the user to start from scratch or import an exisiting heightmap
 
+### Parameter Presets
+Presets that alter the parameters to give user suitable settings based on heightfield size:
+![image](https://github.com/user-attachments/assets/bd5aff5a-1ae3-43ce-a5d4-e17d39037aa1)
+
+Example of python snippet:
+```python
+##Generate Preset##
+def generatePreset():
+    node = hou.pwd()
+    #1000x1000
+    if(node.parm("presets").eval()==0):       
+        #Set parameters
+        node.parm("sizex").set(1000)
+        node.parm("sizey").set(1000)
+        node.parm("boundaryHeight").set(15)
+        node.parm("shrinkRadius").set(25)
+        node.parm("blurRadius").set(100)
+        node.parm("macroNoiseAmplitude").set(50)
+        node.parm("macroNoiseElementSize").set(225)
+        node.parm("subtleNoiseAmplitude").set(22.5)
+        node.parm("subtleNoiseElementSize").set(75)
+        node.parm("distortNoiseAmplitude").set(35)
+        node.parm("distortNoiseElementSize").set(200)
+        node.parm("computeHeightRange").pressButton()
+        node.parm("overrideMinHeight").set(0)
+        node.parm("overrideMaxHeight").set(100)
+```
 
 ### Reset all Simulations
 Button callback script to trigger all simulations of HeightField Erode nodes:
@@ -19,14 +60,21 @@ def triggerAllSims():
             node.parm("resimulate").pressButton()
 
 ```
+
 ## Setup
-1. Download otl
-2. Import into Unreal Engine Contents
-3. Run Houdini Session Sync (Houdini Engine>Open Houdini Session Sync...)
+>[!NOTE]
+> - Unreal Engine version - 5.5.2
+> - Houdini version - 20.5.487
+1. Download otl file
+2. Import into your Unreal Engine project's Content Browser
+
 ## Further Reading
+- Artstation Post - https://www.artstation.com/artwork/y42ND8
 - Tutorial Inspiration: https://www.sidefx.com/tutorials/project-pegasus-landscape-creation/
 - SideFX Landscape Generation Guide: https://www.sidefx.com/docs/houdini/unreal/landscape/generate.html
+  
 ## ToDo
 - [x] Proof of Concept
-- [ ] Feature - Custom Heightmap Import
-- [ ] Improvement - Preview/Generation Speed
+- [x] Feature - Custom Heightmap Import
+- [x] Improvement - Preview/Generation Speed
+- [x] Feature - Presets

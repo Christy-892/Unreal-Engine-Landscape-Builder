@@ -1,6 +1,6 @@
 # Unreal Engine Landscape Generator
-This is a tool for generating Landscapes in Unreal Engine. The design and process of this tool is highly adaptable and allows for either; a quick and easy setup to generate a landscape, or a more in-depth approach for advanced users<br/>  
-This tool was inspired by the Landscape Creation process on Project Pegasus (See "Further Reading"). I wanted to take this concept further and build a tool/pipeline that is adaptable for users of different levels
+This tool enables procedural landscape creation within UE5, offering a flexible workflow that accommodates both rapid prototyping and advanced customization. Designed with scalability in mind, it supports streamlined setup for quick iterations as well as deeper parameter control for experienced users seeking precision.
+The concept was inspired by the Landscape Creation process on Project Pegasus (https://www.sidefx.com/tutorials/project-pegasus-landscape-creation/).Building on this foundation, the tool expands the approach into a modular pipeline tailored for varying skill levels, promoting accessibility without compromising depth.
 
 ## How To Guide
 The intended use of this tool is to be used inside Unreal Engine with **Houdini Session Sync**. The idea is to use the Houdini Session to make changes and easily visualize any alterations made to the heightfield. Once ready, the user can then export into Unreal Engine. This allows for a smooth and seamless iteration process.
